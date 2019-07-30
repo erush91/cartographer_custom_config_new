@@ -18,7 +18,7 @@ include "trajectory_builder.lua"
 options = {
   map_builder = MAP_BUILDER,
   trajectory_builder = TRAJECTORY_BUILDER,
-  map_frame = "map",
+  map_frame = "world",
   tracking_frame = "base_link",
   published_frame = "base_link",
   odom_frame = "odom",
@@ -43,7 +43,7 @@ options = {
 }
 
 TRAJECTORY_BUILDER_3D.num_accumulated_range_data = 1
--- Set to 1 because only need one Ouster point cloud message / full 360 coverage 
+-- Set to 1 because only need one Ouster point cloud message / full 360 coverage
 
 MAP_BUILDER.use_trajectory_builder_2d = true
 -- Use 3d because using Ouster 3D lidar
@@ -58,7 +58,7 @@ POSE_GRAPH.optimize_every_n_nodes = 320
 -- Set to 320 for loop closure, set to 0 for no loop closure
 
 POSE_GRAPH.constraint_builder.sampling_ratio = 0.03
--- 
+--
 POSE_GRAPH.optimization_problem.ceres_solver_options.max_num_iterations = 10
 POSE_GRAPH.constraint_builder.min_score = 0.62
 POSE_GRAPH.constraint_builder.global_localization_min_score = 0.66
