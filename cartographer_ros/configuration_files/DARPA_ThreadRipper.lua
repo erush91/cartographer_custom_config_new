@@ -19,8 +19,8 @@ options = {
   map_builder = MAP_BUILDER,
   trajectory_builder = TRAJECTORY_BUILDER,
   map_frame = "world",
-  tracking_frame = "base_link",
-  published_frame = "base_link",
+  tracking_frame = "gvrbotE/imu",
+  published_frame = "gvrbotE/base",
   odom_frame = "odom",
   provide_odom_frame = true,
   publish_frame_projected_to_2d = true,
@@ -42,13 +42,6 @@ options = {
   landmarks_sampling_ratio = 1.,
 }
 
----------------------
--- DEFAULT CHANGES --
----------------------
-
-POSE_GRAPH.optimization_problem.ceres_solver_options.max_num_iterations = 10
-POSE_GRAPH.constraint_builder.min_score = 0.62
-POSE_GRAPH.constraint_builder.global_localization_min_score = 0.66
 
 -------------------------------
 -- CUSTOM MAP_BUILER CHANGES --
@@ -56,7 +49,7 @@ POSE_GRAPH.constraint_builder.global_localization_min_score = 0.66
 
 MAP_BUILDER.use_trajectory_builder_2d = true
 
-MAP_BUILDER.num_background_threads = 6
+MAP_BUILDER.num_background_threads = 16
 -- MAP_BUILDER.num_background_threads = 7
 
 ------------------------------------------
@@ -73,13 +66,13 @@ TRAJECTORY_BUILDER_2D.min_range = 0.5
 TRAJECTORY_BUILDER_2D.max_range = 100.
 -- TRAJECTORY_BUILDER_2D.max_range = 30.
 
-TRAJECTORY_BUILDER_2D.min_z = 0.25
+TRAJECTORY_BUILDER_2D.min_z = 1.0
 -- TRAJECTORY_BUILDER_2D.min_z = -0.8
 
-TRAJECTORY_BUILDER_2D.max_z = 1.00
+TRAJECTORY_BUILDER_2D.max_z = 2.0
 -- TRAJECTORY_BUILDER_2D.max_z = 2.
 
-TRAJECTORY_BUILDER_2D.missing_data_ray_length = 5.0
+TRAJECTORY_BUILDER_2D.missing_data_ray_length = 20
 -- TRAJECTORY_BUILDER_2D.missing_data_ray_length = 5.0
 
 TRAJECTORY_BUILDER_2D.num_accumulated_range_data = 1
@@ -91,7 +84,7 @@ TRAJECTORY_BUILDER_2D.ceres_scan_matcher.translation_weight = 1.
 TRAJECTORY_BUILDER_2D.ceres_scan_matcher.rotation_weight = 10.
 -- TRAJECTORY_BUILDER_2D.ceres_scan_matcher.rotation_weight = 40.
 
-TRAJECTORY_BUILDER_2D.ceres_scan_matcher.ceres_solver_options.num_threads = 6
+TRAJECTORY_BUILDER_2D.ceres_scan_matcher.ceres_solver_options.num_threads = 16
 -- TRAJECTORY_BUILDER_2D.ceres_scan_matcher.ceres_solver_options.num_threads = 1
 
 TRAJECTORY_BUILDER_2D.motion_filter.max_time_seconds = 0.5
@@ -110,7 +103,7 @@ TRAJECTORY_BUILDER_2D.motion_filter.max_angle_radians = 0.004
 POSE_GRAPH.optimization_problem.huber_scale = 5e2
 -- POSE_GRAPH.optimization_problem.huber_scale = 5e2
 
-POSE_GRAPH.optimize_every_n_nodes = 320
+POSE_GRAPH.optimize_every_n_nodes = 90
 -- POSE_GRAPH.optimize_every_n_nodes = 90
 -- Set to 320 for loop closure, set to 0 for no loop closure
 
@@ -120,7 +113,7 @@ POSE_GRAPH.constraint_builder.sampling_ratio = 0.03
 POSE_GRAPH.constraint_builder. max_constraint_distance = 30.
 -- POSE_GRAPH.constraint_builder. max_constraint_distance = 15.
 
-POSE_GRAPH.constraint_builder.ceres_scan_matcher.ceres_solver_options.num_threads = 6
+POSE_GRAPH.constraint_builder.ceres_scan_matcher.ceres_solver_options.num_threads = 4
 -- POSE_GRAPH.constraint_builder.ceres_scan_matcher.num_threads = 1
 
 POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.linear_xy_search_window = 10.
@@ -137,7 +130,7 @@ POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.rotation_weight = 100.
 -- POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.rotation_weight = 1.
 -- IMPACT: WEIGHTS ROTATION MORE (NEED TO TRY REDUCING FOR 360 FOV CASE)
 
-POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.ceres_solver_options.num_threads = 6
+POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.ceres_solver_options.num_threads = 4
 -- POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.ceres_solver_options.num_threads = 1
 -- IMPACT: HAS NOT BEEN EVALUATED, NEED TO TEST EFFECT ON LATENCY
 
@@ -151,7 +144,7 @@ POSE_GRAPH.optimization_problem.use_online_imu_extrinsics_in_3d = true
 POSE_GRAPH.optimization_problem.fix_z_in_3d = false
 -- POSE_GRAPH.optimization_problem.fix_z_in_3d = false
 
-POSE_GRAPH.optimization_problem.ceres_solver_options.num_threads = 6
+POSE_GRAPH.optimization_problem.ceres_solver_options.num_threads = 8
 -- POSE_GRAPH.optimization_problem.ceres_solver_options.num_threads = 7
 
 POSE_GRAPH.global_sampling_ratio = 0.1
