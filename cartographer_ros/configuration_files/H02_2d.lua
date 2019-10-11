@@ -18,11 +18,11 @@ include "trajectory_builder.lua"
 options = {
   map_builder = MAP_BUILDER,
   trajectory_builder = TRAJECTORY_BUILDER,
-  map_frame = "world",
-  tracking_frame = "base_link",
-  published_frame = "base_link",
+  map_frame = "map",
+  tracking_frame = "imu_viz_link",
+  published_frame = "imu_viz_link",
   odom_frame = "odom",
-  provide_odom_frame = true,
+  provide_odom_frame = false,
   publish_frame_projected_to_2d = true,
   use_odometry = false,
   use_nav_sat = false,
@@ -32,7 +32,7 @@ options = {
   num_subdivisions_per_laser_scan = 1,
   num_point_clouds = 1,
   lookup_transform_timeout_sec = 0.2,
-  submap_publish_period_sec = 0.3,
+  submap_publish_period_sec = 0.05,
   pose_publish_period_sec = 5e-3,
   trajectory_publish_period_sec = 30e-3,
   rangefinder_sampling_ratio = 1.,
@@ -73,10 +73,10 @@ TRAJECTORY_BUILDER_2D.min_range = 0.5
 TRAJECTORY_BUILDER_2D.max_range = 100.
 -- TRAJECTORY_BUILDER_2D.max_range = 30.
 
-TRAJECTORY_BUILDER_2D.min_z = -0.25
+TRAJECTORY_BUILDER_2D.min_z = -0.05
 -- TRAJECTORY_BUILDER_2D.min_z = -0.8
 
-TRAJECTORY_BUILDER_2D.max_z = 0.75
+TRAJECTORY_BUILDER_2D.max_z = 0.70
 -- TRAJECTORY_BUILDER_2D.max_z = 2.
 
 TRAJECTORY_BUILDER_2D.missing_data_ray_length = 5.0
