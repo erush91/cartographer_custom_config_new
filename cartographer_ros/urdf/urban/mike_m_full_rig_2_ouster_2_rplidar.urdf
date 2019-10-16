@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+
+<robot name="cartographer_backpack_3d">
+
+  <material name="orange">
+    <color rgba="1.0 0.5 0.2 1" />
+  </material>
+  <material name="gray">
+    <color rgba="0.2 0.2 0.2 1" />
+  </material>
+
+  <link name="3dm_gx5_15">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <box size="0.06 0.04 0.02" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+  <link name="laser">
+    <visual>
+      <origin xyz="0 0 0.02" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.04" length="0.04" />
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1.0"/>
+      </material>
+   </visual>
+  </link>
+
+  <link name="base_link"/>
+
+  <joint name="imu-viz-joint" type="fixed">
+    <parent link="imu_viz_link"/>
+    <child link="3dm_gx5_15"/>
+    <origin xyz="0 0 0" rpy="3.14159265359 0 1.57079632679" />
+  </joint>
+  <link name="imu_viz_link"/>
+
+  <joint name="base-sensors-joint" type="fixed">
+    <parent link="mast_sensor_rig_link"/>
+    <child link="base_link"/>
+    <origin xyz="-0.1774 0 -0.46841" rpy="0 0 0" />
+  </joint>
+
+  <joint name="rig-imu-joint" type="fixed">
+    <parent link="3dm_gx5_15"/>
+    <child link="mast_sensor_rig_link"/>
+    <origin xyz="0 -0.003327 0.0135" rpy="3.14159265359 0 1.57079632679" />
+  </joint>
+  <link name="mast_sensor_rig_link" />
+
+  <joint name="rig-ouster-1-joint" type="fixed">
+    <parent link="mast_sensor_rig_link"/>
+    <child link="ouster_1/os1_lidar"/>
+    <origin xyz="0 0 0.07" rpy="0 0 0" />
+  </joint>
+  <link name="ouster_1/os1_lidar">
+    <visual>
+      <origin xyz="0 0 -0.026180" rpy="0 0 0" />
+      <geometry>
+        <box size="0.11 0.11 0.02"/><cylinder radius="0.04" length="0.08" />
+      </geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.01382" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.04" length="0.08" />
+      </geometry>
+      <material name="aluminum"/>
+  </visual>
+  </link>
+
+  <joint name="rig-ouster-2-joint" type="fixed">
+    <parent link="mast_sensor_rig_link"/>
+    <child link="ouster_2/os1_lidar"/>
+    <origin xyz="0.0 0.17145 -0.060325" rpy="-1.57079632679 0 0" />
+  </joint>
+  <link name="ouster_2/os1_lidar">
+    <visual>
+      <origin xyz="0 0 -0.026180" rpy="0 0 0" />
+      <geometry>
+        <box size="0.11 0.11 0.02"/><cylinder radius="0.04" length="0.08" />
+      </geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.01382" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.04" length="0.08" />
+      </geometry>
+      <material name="aluminum"/>
+  </visual>
+  </link>
+
+  <!-- <joint name="os1_link_joint" type="fixed">
+    <parent link="imu_viz_link" />
+    <child link="ouster_1/os1_lidar" />
+    <origin xyz="0.0 0. 0.07" rpy="0.0 0.0 3.14159" />
+  </joint> -->
+
+<!--   
+
+  <link name="imu_link"/>
+
+  <link name="base_link" />
+    <joint name="rig-imu-joint" type="fixed">
+      <parent link="imu_link"/>
+      <child link="mast_sensor_rig_link"/>
+      <origin xyz="0 -0.003327 0.0135" rpy="3.14 0 1.57" />
+    </joint>
+    <link name="mast_sensor_rig_link" />
+
+
+
+-->
+
+
+  <!-- <joint name="os1_2_link_joint" type="fixed">
+    <parent link="imu_viz_link" />
+    <child link="ouster_2/os1_lidar"/>
+    <origin xyz="0.0 0.17145 -0.060325" rpy="-1.5708 0.0 3.14159" />
+  </joint> -->
+
+  <!-- <link name="ouster_2/os1_lidar">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <cylinder length="0.07" radius="0.05" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+  </link> -->
+
+  <joint name="laser_link_joint" type="fixed">
+    <parent link="mast_sensor_rig_link" />
+    <child link="laser"/>
+    <origin xyz="0.0 0.17145 -0.060325" rpy="-1.57079632679 0 0" />
+  </joint>
+
+</robot>

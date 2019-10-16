@@ -18,6 +18,11 @@
 
 <launch>
 
+	<!--
+  <node pkg="tf" type="static_transform_publisher" name="T_fake_localization"
+    args="0 0 0 0 0 0 1 map imu_viz_link 100" />
+-->
+
   <node pkg="nodelet" type="nodelet" name="pcl_manager" args="manager" output="screen" />
 
   <!-- Run a passthrough filter to clean NaNs -->
@@ -33,17 +38,17 @@
 
 
   <param name="robot_description"
-    textfile="$(find cartographer_ros)/urdf/urban.urdf" />
+	  textfile="$(find cartographer_ros)/urdf/urban/mike_m_full_rig_2_ouster_2_rplidar.urdf" />
 
   <node name="robot_state_publisher" pkg="robot_state_publisher"
     type="robot_state_publisher" />
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
-          -configuration_directory $(find cartographer_ros)/configuration_files
-          -configuration_basename urban_3d.lua"
+      -configuration_directory $(find cartographer_ros)/configuration_files
+      -configuration_basename urban/mike_m_H02_3d.lua"
       output="screen">
     <remap from="/odom" to="/transformed_odom"/> 
-    <remap from="/points2" to="/os1_cloud_node/points"/>
+    <remap from="/points2" to="/os1_1_cloud_node/points"/>
     <remap from="/imu" to="/imu_raw"/>
   </node>
 
