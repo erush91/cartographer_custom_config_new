@@ -18,11 +18,11 @@ include "trajectory_builder.lua"
 options = {
   map_builder = MAP_BUILDER,
   trajectory_builder = TRAJECTORY_BUILDER,
-  map_frame = "map",
-  tracking_frame = "imu_viz_link",
-  published_frame = "imu_viz_link",
+  map_frame = "world",
+  tracking_frame = "base_link",
+  published_frame = "base_link",
   odom_frame = "odom",
-  provide_odom_frame = false,
+  provide_odom_frame = true,
   publish_frame_projected_to_2d = false,
   use_odometry = false,
   use_nav_sat = false,
@@ -46,8 +46,10 @@ options = {
 -- DEFAULT CHANGES --
 ---------------------
 
-POSE_GRAPH.optimization_problem.ceres_solver_options.max_num_iterations = 10
-POSE_GRAPH.constraint_builder.min_score = 0.62
+POSE_GRAPH.optimization_problem.ceres_solver_options.max_num_iterations = 5
+-- POSE_GRAPH.optimization_problem.ceres_solver_options.max_num_iterations = 10
+POSE_GRAPH.constraint_builder.min_score = 0.55 --0.62
+-- POSE_GRAPH.constraint_builder.min_score = 0.55
 POSE_GRAPH.constraint_builder.global_localization_min_score = 0.66
 
 -------------------------------
@@ -77,22 +79,20 @@ TRAJECTORY_BUILDER_3D.num_accumulated_range_data = 1
 -- TRAJECTORY_BUILDER_3D.submaps.num_range_data = 1500
 -- Set to 1 because only need one Ouster point cloud message / full 360 coverage
 
-TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.linear_search_window = 0.2
+TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.linear_search_window = 0.11
 -- TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.linear_search_window = 0.15
 -- IMPACT: SET BASED ON 1 M/S MAX SPEED, TRACKING ERROR IF VEHICLES GOES FASTER
 
-TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.angular_search_window = math.rad(10.)
+TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.angular_search_window = math.rad(1.)
 -- ISSUE: UNRESOLVABLE LATENCY WHEN INCREASING ABOVE 2 DEG/SEC
 
+-- translation and rotation wegiths are really important! And sensitive...
+--
 TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 1.
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 5.
---
 
-TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 1.
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 10.
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 4e2.
-
--- 80:1 (ROTATIOAL:TRANSLATIONAL) yields horrible results
--- 10:1 (ROTATIOAL:TRANSLATIONAL) yields better results, but still does not think gravity is down
 
 TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.num_threads = 6
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.num_threads = 1
@@ -107,51 +107,66 @@ TRAJECTORY_BUILDER_3D.submaps.range_data_inserter.miss_probability =.45
 POSE_GRAPH.optimization_problem.huber_scale = 5e2
 -- POSE_GRAPH.optimization_problem.huber_scale = 5e2
 
-POSE_GRAPH.optimize_every_n_nodes = 90
--- POSE_GRAPH.optimize_every_n_nodes = 320
+POSE_GRAPH.optimize_every_n_nodes = 45 --90 --320
+-- POSE_GRAPH.optimize_every_n_nodes = 90
 -- Set to 320 for loop closure, set to 0 for no loop closure
 
-POSE_GRAPH.constraint_builder.sampling_ratio = 0.6
+POSE_GRAPH.constraint_builder.sampling_ratio = 0.3 --0.6
 -- POSE_GRAPH.constraint_builder.sampling_ratio = 0.3
 
-POSE_GRAPH.constraint_builder. max_constraint_distance = 30.
+POSE_GRAPH.constraint_builder.max_constraint_distance = 30.
 -- POSE_GRAPH.constraint_builder. max_constraint_distance = 15.
 
 POSE_GRAPH.constraint_builder.ceres_scan_matcher.ceres_solver_options.num_threads = 6
 -- POSE_GRAPH.constraint_builder.ceres_scan_matcher.num_threads = 1
+-- IMPACT: increase parameter to decrease global SLAM latency
 
-POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.linear_xy_search_window = 10.
+POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.linear_xy_search_window = 5 --10.
 -- POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.linear_xy_search_window = 5.
+-- IMPACT: decrease parameter to decrease global SLAM latency
 
-POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.linear_z_search_window = 5.
+POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.linear_z_search_window = 3 --5.
 -- POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.linear_z_search_window = 1.
+-- IMPACT: decrease parameter to decrease global SLAM latency
 
 POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.angular_search_window = math.rad(22.5)
 -- POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.angular_search_window = math.rad(15.)
 -- IMPACT: MORE DRIFT-TOLERANT LOOP CLOSURES (NEED TO TRY REDUCING FOR 360 FOV CASE)
+-- IMPACT: decrease parameter to decrease global SLAM latency
 
-POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.rotation_weight = 10.
+POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.rotation_weight = 100.
 -- POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.rotation_weight = 1.
+-- IMPACT: Tried 10, caused more drift, also caused basement and 1st floor to have a bad loop closure together (when run overnight)
 -- IMPACT: WEIGHTS ROTATION MORE (NEED TO TRY REDUCING FOR 360 FOV CASE)
+
+POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.translation_weight = 10
+-- POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.translation_weight = 10
+
+POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.only_optimize_yaw = false
+-- POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.optimize_yaw = false
 
 POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.ceres_solver_options.num_threads = 6
 -- POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.ceres_solver_options.num_threads = 1
--- IMPACT: HAS NOT BEEN EVALUATED, NEED TO TEST EFFECT ON LATENCY
+-- IMPACT: increase parameter to decrease global SLAM latency
 
 POSE_GRAPH.optimization_problem.log_solver_summary = true
 -- POSE_GRAPH.optimization_problem.log_solver_summary = false
 -- SET TO TRUE SO PRINTS IMU TRANSFORM ERROR WHEN LOOP CLOSURE OCCURS
 
-POSE_GRAPH.optimization_problem.use_online_imu_extrinsics_in_3d = true
+POSE_GRAPH.optimization_problem.use_online_imu_extrinsics_in_3d = false
 -- POSE_GRAPH.optimization_problem.use_online_imu_extrinsics_in_3d = true
+-- IMPACT: setting to false worsed performance, not sure why, may want to revisit.
 
 POSE_GRAPH.optimization_problem.fix_z_in_3d = false
 -- POSE_GRAPH.optimization_problem.fix_z_in_3d = false
+-- IMPACT: Does not loop close if set to true.
 
 POSE_GRAPH.optimization_problem.ceres_solver_options.num_threads = 6
 -- POSE_GRAPH.optimization_problem.ceres_solver_options.num_threads = 7
+-- IMPACT: increase parameter to decrease global SLAM latency
 
-POSE_GRAPH.global_sampling_ratio = 0.1
+POSE_GRAPH.global_sampling_ratio = 0.003 --0.1
 -- POSE_GRAPH.global_sampling_ratio = 0.003
+-- IMPACT: decrease parameter to decrease global SLAM latency
 
 return options

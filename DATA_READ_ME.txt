@@ -148,7 +148,13 @@ Worked well without online IMU extrinsics.
 
 I tried to add some IMU orientation error but the results are inconsistent. I added 1 deg of error, and it couldn't output that. I tried assuming it is w, x, y, z. I also tried x, y, z, w.
 
+To Do Items
+- faster loop closures, so accumulate less drift
+- less noisy trajectories
+
 Now I don't trust the IMU extrinsics estimation output. I am going to just TUNE EXTRINSICS BY HAND! RUNNING WITHOUT LOOP CLOSURE
+
+
 
 ALSO, NOW LOOKING AT 2 x 2D LIDARS
 

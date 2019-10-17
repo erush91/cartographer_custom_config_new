@@ -38,14 +38,14 @@
 
 
   <param name="robot_description"
-	  textfile="$(find cartographer_ros)/urdf/urban/gene_full_rig_2_ouster_2_rplidar.urdf" />
+	  textfile="$(find cartographer_ros)/urdf/urban/gene_FullRig_2_Ouster_2_RPLIDAR.urdf" />
 
   <node name="robot_state_publisher" pkg="robot_state_publisher"
     type="robot_state_publisher" />
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
           -configuration_directory $(find cartographer_ros)/configuration_files/urban
-	  -configuration_basename gene_H02_3d.lua"
+	  -configuration_basename gene_3D_2_RPLIDAR.lua"
       output="screen">
     <remap from="/odom" to="/transformed_odom"/> 
     <remap from="/scan" to="/lidar0/scan"/>
