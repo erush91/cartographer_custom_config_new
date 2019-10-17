@@ -84,13 +84,11 @@ TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.linear_search_window = 
 TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.angular_search_window = math.rad(1.)
 -- ISSUE: UNRESOLVABLE LATENCY WHEN INCREASING ABOVE 2 DEG/SEC
 
-TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 1.
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 1. --10 also good
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 5.
--- IMPACT: YIELDED GOOD TRACKING FOR 270 DEGREE FOV	
 
 TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 10.
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 4e2.
--- IMPACT: YIELDED GOOD TRACKING FOR 270 DEGREE FOV
 
 TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.num_threads = 6
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.num_threads = 1

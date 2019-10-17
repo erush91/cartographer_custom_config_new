@@ -52,9 +52,7 @@
     <parent link="base_link" />
     <child link="3dm_gx5_15" />
     <!--<origin xyz="0 0 0" rpy="3.1416 0 1.5708" />-->
-    <!--<origin xyz="0 0 0" rpy="3.14421064747 0 1.56503674026" /> good -->
-    <origin xyz="0 0 0" rpy="3.14159265359 0 1.57079632679" />
-
+    <origin xyz="0 0 0" rpy="3.14421064747 0 1.56503674026" />
   </joint>
 
   <joint name="os1_link_joint" type="fixed">

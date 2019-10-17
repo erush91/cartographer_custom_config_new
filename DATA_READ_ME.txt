@@ -1,29 +1,65 @@
+*** 2010-10-09 *** 
+
+--------------------
+
+DATA COLLECTION COMPLETED
+
+SETUP: F450 UAV
+
+SENSORS:
+
+1 x Horizontal OS-1-64, 1024x10 mode    GOOD
+
+ENVIRONMENT: Aerospace Flight Arena, Mike O Manual Flight, difficult to take off, control, and fly for long. Short tests
+
+--------------------
+
 *** 2019-10-14 ***
 
-SENSORS
+--------------------
+
+DATA COLLECTION: 
+
+SETUP: FULL HANDHELD RIG (OVERHEAD GENE)
+
+SENSORS:
 
 1 x Horizontal OS-1-64, 2048x10 mode 	GOOD	
 1 x Vertical OS-1-64, 2048x10 mode 	GOOD	
 1 x Horizontal RPLIDAR S1 		BAD	laser frame, TOO MANY MESSAGES	
 1 x Vertical RPLIDAR S1 		BAD	laser frame,
 
-SENSOR COMBINATIONS
+ENVIRONMENT: 1st Floor and Basement ECES
+
+--------------------
+
+SENSOR COMBINATIONS NOTE
 
 Single Horizontal Ouster testing is okay, but is at 2 x resoluation compared to Tunnel Circuit
 Running Horizontal and Vertical Ouster does not work, issue with Cartographer integration (the scan_matched_points alternate between the two sensors)
 Same issue for Horizontal Ouster and Vertical RPLIDAR.
 Cannot do any 2D LiDAR testing because the horizontal LiDAR is publishing too often (appears blinking in RViz)
 
-TUNING PARAMETERS
-
 *** 2019-10-15 ***
 
-SENSORS
+--------------------
+
+DATA COLLECTION COMPLETED
+
+SETUP: FULL HANDHELD RIG (OVERHEAD GENE)
+
+SENSORS:
 
 1 x Horizontal OS-1-64, 1024x10 mode 	GOOD
 1 x Vertical OS-1-64, 1024x10 mode	GOOD
 1 x Horizontal RPLIDAR S1		GOOD	rp0 frame
 1 x Vertical RPLIDAR S1			GOOD	rp1 frame
+
+ENVIRONMENT: 1st Floor and Basement ECES
+
+--------------------
+
+TUNING 
 
 Reverted back to tuning parameters from H02_3d.lua from before Tunnel Circuit. This is when we were using 3D Cartographer, before we made the switch to 2D Cartographer. Comparison has not been done between thesethese parameters and the "tuned" parameters from 2019-10-14.
 
@@ -79,7 +115,41 @@ rqt_plot shows that the maximum angular velocities are around 0.75 rad/s. Should
 Did some more reading about the IMU calibration: it says the output is the lidar sensor to imu frame: https://github.com/googlecartographer/cartographer_ros/pull/1025
 
 Unknowns:
-- what the proper IMU calibration / urdf is...
-- 
+- what the proper IMU calibration / urdf is...should try adding 5 deg error to mimic large error, then look at extrinsics report.
+- getting smoother trajectory (lowering traj weights) without causing slipping.
+
+Ran 2048x10 (cartographer_tuning_2019-10-16-02-40-03.bag) to compare vs the 1048 x 10: It performs decently, the amount of drift is similar (both low). But the loop closures have more delay (greater latency), which is expected due to having 2x as many data points to optimize over. I recommend using 1024x10 over 2048x10 for the aerial vehicle, since it has limited compute.
+
+try setting translation back to 10, ran overnight...
+
+setting POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.rotation_weight = 10 is similar to POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.rotation_weight = 100. ACTUALLY, setting to 10 and running overnight resulted in a bad loop closure of the basement and 1st floor.
+
+*** 2019-10-16 ***
+
+Tested on 2019_10_09_F450_Flight_Aero_test1, test2, test3 dataset, looks really good, EXCEPT the bad loop closure at the beginning. Need to figure out how to prevent that from happening.
+
+Also some linear error, I think because the vehicle is moving fast.
+
+Tried to change false -- true: POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.optimize_yaw = false. It did not help at all. I think this issue may be at the traj level, not pose graph.
+
+Tried traj ang limit from math.rad(1) --> math.rad(0.001) did not fix either, so not traj. TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.angular_search_window
+
+Now tried to change pose graph from math.rad(22.5) to math.rad(1): POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.angular_search_window = math.rad(1)...This also didn't help
+
+FIGURED IT OUT: Had to set POSE_GRAPH.optimization_problem.use_online_imu_extrinsics_in_3d = false. It was true before, and wreaking havoc!
+
+Now need to retest without online imu extrinsics on ECES dataset.
+
+cartographer_tuning_2019-10-16-13-42-11.bag
+
+Worked well without online IMU extrinsics.
+
+*** 2019-10-17 ***
+
+I tried to add some IMU orientation error but the results are inconsistent. I added 1 deg of error, and it couldn't output that. I tried assuming it is w, x, y, z. I also tried x, y, z, w.
+
+Now I don't trust the IMU extrinsics estimation output. I am going to just TUNE EXTRINSICS BY HAND! RUNNING WITHOUT LOOP CLOSURE
+
+ALSO, NOW LOOKING AT 2 x 2D LIDARS
 
 
