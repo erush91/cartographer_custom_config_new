@@ -151,11 +151,35 @@ I tried to add some IMU orientation error but the results are inconsistent. I ad
 To Do Items
 - faster loop closures, so accumulate less drift
 - less noisy trajectories
+- should try single scan Ouster
+- run with less than 6 cores (600-700%)
 
 Now I don't trust the IMU extrinsics estimation output. I am going to just TUNE EXTRINSICS BY HAND! RUNNING WITHOUT LOOP CLOSURE
 
 
 
 ALSO, NOW LOOKING AT 2 x 2D LIDARS
+
+Can't run 2 x 2D LiDARS. For some reason, it goes off to infinity. I had the same issue with the Ouster.
+
+Running 3D Cartographer with 1 Ouster (horizontal) is not great. Significant drift, much of which is caused by bad scan matches or "jumps" due to quick rolling or pitching motion. This causes the sensor to see the ground instead of the walls. A limitation of using a 2D sensor to do 3D state estimation. Also, the accumulated z drift is pretty bad.
+
+Increasing traj rot and transl weights by 10x helped. Should probably try to continue increasing and see what happens. May be usable for control, but still a "jump" here or there.
+
+To Do Items
+- increase traj rot and transl weights to see what happens.
+- try to reduce upward z drift 
+- try to get more loop closures. Difficult to tell if it was even doing anything.
+
+POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.only_optimize_yaw = false --> true (didn't really do much)
+
+POSE_GRAPH.optimization_problem.fix_z_in_3d = false --> true (didn't fix z, but reduced the z translation by a lot, so not accurate, not what we want.
+
+only uses 30-60% compute! Seemed like it wasn't doing many loop closures
+
+*** 2019-10-18 ***
+
+Trying to reduce drift in open loop
+
 
 

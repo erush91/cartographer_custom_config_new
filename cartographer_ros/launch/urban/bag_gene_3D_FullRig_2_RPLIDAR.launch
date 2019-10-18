@@ -48,7 +48,9 @@
 	  -configuration_basename gene_3D_2_RPLIDAR.lua"
       output="screen">
     <remap from="/odom" to="/transformed_odom"/> 
-    <remap from="/scan" to="/lidar0/scan"/>
+    <remap from="/scan" to="/lidar0/scan"/>-->
+    <!--<remap from="/scan_1" to="/lidar0/scan"/>-->
+    <!--<remap from="/scan_2" to="/lidar1/scan"/>-->
     <remap from="/imu" to="/imu_raw"/>
   </node>
 

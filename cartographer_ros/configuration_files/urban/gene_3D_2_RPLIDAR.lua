@@ -27,10 +27,10 @@ options = {
   use_odometry = false,
   use_nav_sat = false,
   use_landmarks = false,
-  num_laser_scans = 0,
+  num_laser_scans = 1,
   num_multi_echo_laser_scans = 0,
   num_subdivisions_per_laser_scan = 1,
-  num_point_clouds = 1,
+  num_point_clouds = 0,
   lookup_transform_timeout_sec = 0.2,
   submap_publish_period_sec = 0.3,
   pose_publish_period_sec = 5e-3,
@@ -65,12 +65,12 @@ MAP_BUILDER.num_background_threads = 6
 -- CUSTOM TRAJECTORY_BUILDER_3D CHANGES --
 ------------------------------------------
 
-MAX_3D_RANGE = 100.
+MAX_3D_RANGE = 50.
 -- MAX_3D_RANGE = 60.
 -- SET BASED UPON OUSTER LIMITATIONS
 -- IMPACT: HAS NOT BEEN EVALUATED, NEED TO TEST EFFECT ON LATENCY AND ACCURACY
 
-TRAJECTORY_BUILDER_3D.min_range = 1.
+TRAJECTORY_BUILDER_3D.min_range = 0.05
 -- TRAJECTORY_BUILDER_3D.min_range = 0.5
 -- SET BASED UPON OUSTER LIMITATIONS
 -- IMPACT: HAS NOT BEEN EVALUATED, NEED TO TEST EFFECT ON LATENCY AND ACCURACY
@@ -88,10 +88,10 @@ TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.angular_search_window =
 
 -- translation and rotation wegiths are really important! And sensitive...
 --
-TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 1.
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 10.
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 5.
 
-TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 10.
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 100.
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 4e2.
 
 TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.num_threads = 6

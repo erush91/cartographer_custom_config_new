@@ -24,6 +24,7 @@ options = {
   odom_frame = "odom",
   provide_odom_frame = true,
   publish_frame_projected_to_2d = false,
+  use_pose_extrapolator = true,
   use_odometry = false,
   use_nav_sat = false,
   use_landmarks = false,
@@ -107,7 +108,7 @@ TRAJECTORY_BUILDER_3D.submaps.range_data_inserter.miss_probability =.45
 POSE_GRAPH.optimization_problem.huber_scale = 5e2
 -- POSE_GRAPH.optimization_problem.huber_scale = 5e2
 
-POSE_GRAPH.optimize_every_n_nodes = 45 --90 --320
+POSE_GRAPH.optimize_every_n_nodes = 0 --45 --90 --320
 -- POSE_GRAPH.optimize_every_n_nodes = 90
 -- Set to 320 for loop closure, set to 0 for no loop closure
 
