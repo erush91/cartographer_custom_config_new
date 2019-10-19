@@ -181,5 +181,18 @@ only uses 30-60% compute! Seemed like it wasn't doing many loop closures
 
 Trying to reduce drift in open loop
 
+Tuning the local SLAM right now, and just had another breakthrough. These parameters have a great effect on the total odometry drift. I just ran without loop closures and this is my map. I've never gotten results this good before.
+TRAJECTORY_BUILDER_3D.motion_filter.max_time_seconds = 5
+-- TRAJECTORY_BUILDER_3D.motion_filter.max_time_seconds = 0.5
+TRAJECTORY_BUILDER_3D.motion_filter.max_distance_meters= 1
+-- TRAJECTORY_BUILDER_3D.motion_filter.max_distance_meters= 0.1
+TRAJECTORY_BUILDER_3D.motion_filter.max_angle_radians = 0.4
+-- TRAJECTORY_BUILDER_3D.motion_filter.max_angle_radians = 0.004
+
+What this is doing is simply using less of the lidar scans. Which I guess makes it more accurate...?
+
+now need to try closed loop
+
+Tried closing loop, found that loop closures aren't happened (as frequently as I would like), maybe I need to tune the optimize every n nodes, since maybe there's less nodes now that I am sampling so infrequently? Maybe I should be less aggresive with the motion filter.
 
 

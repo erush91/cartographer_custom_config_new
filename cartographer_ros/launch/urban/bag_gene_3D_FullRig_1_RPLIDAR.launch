@@ -45,7 +45,7 @@
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
           -configuration_directory $(find cartographer_ros)/configuration_files/urban
-	  -configuration_basename gene_3D_2_RPLIDAR.lua"
+	  -configuration_basename gene_3D_1_RPLIDAR.lua"
       output="screen">
     <remap from="/odom" to="/transformed_odom"/> 
     <remap from="/scan" to="/lidar0/scan"/>-->

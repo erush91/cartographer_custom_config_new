@@ -89,10 +89,10 @@ TRAJECTORY_BUILDER_3D.real_time_correlative_scan_matcher.angular_search_window =
 
 -- translation and rotation wegiths are really important! And sensitive...
 --
-TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 1.
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 3.
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 5.
 
-TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 10.
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 30.
 -- TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 4e2.
 
 TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.num_threads = 6
@@ -100,6 +100,13 @@ TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.num_threads = 6
 
 TRAJECTORY_BUILDER_3D.submaps.range_data_inserter.hit_probability = .55
 TRAJECTORY_BUILDER_3D.submaps.range_data_inserter.miss_probability =.45
+
+TRAJECTORY_BUILDER_3D.motion_filter.max_time_seconds = 0.5
+-- TRAJECTORY_BUILDER_3D.motion_filter.max_time_seconds = 0.5
+TRAJECTORY_BUILDER_3D.motion_filter.max_distance_meters= 0.1
+-- TRAJECTORY_BUILDER_3D.motion_filter.max_distance_meters= 0.1
+TRAJECTORY_BUILDER_3D.motion_filter.max_angle_radians = 0.4
+-- TRAJECTORY_BUILDER_3D.motion_filter.max_angle_radians = 0.004
 
 -------------------------------
 -- CUSTOM POSE_GRAPH CHANGES --
