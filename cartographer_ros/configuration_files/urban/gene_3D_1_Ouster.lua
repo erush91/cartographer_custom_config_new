@@ -115,7 +115,7 @@ TRAJECTORY_BUILDER_3D.motion_filter.max_angle_radians = 0.4
 POSE_GRAPH.optimization_problem.huber_scale = 5e2
 -- POSE_GRAPH.optimization_problem.huber_scale = 5e2
 
-POSE_GRAPH.optimize_every_n_nodes = 0 --45 --90 --320
+POSE_GRAPH.optimize_every_n_nodes = 45 --45 --90 --320
 -- POSE_GRAPH.optimize_every_n_nodes = 90
 -- Set to 320 for loop closure, set to 0 for no loop closure
 

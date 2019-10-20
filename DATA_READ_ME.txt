@@ -195,4 +195,25 @@ now need to try closed loop
 
 Tried closing loop, found that loop closures aren't happened (as frequently as I would like), maybe I need to tune the optimize every n nodes, since maybe there's less nodes now that I am sampling so infrequently? Maybe I should be less aggresive with the motion filter.
 
+more drift: 0pt5_0pt1_0pt004_OL/
+less drift: 0pt5_0pt1_0pt4_OL/
+less drift: 0pt5_0pt1_1pt6_OL/ (identical to 0pt5_0pt1_0pt4_OL)
+
+still loop closes: 0pt5_0pt1_0pt4_CL/
+still loop closes: 0pt5_0pt1_1pt6_CL/
+slowly loop closes: 0pt5_1pt0_0pt4_CL/
+
+I've noticed that there is more drift on the way out when loop closures are turned on... strange. UNRESOLVED.
+
+Tried reducing POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.rotation_weight = 100 to POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d.rotation_weight = 10. Led to slower loop closures.
+
+Tried to reduce TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight from 3 to 1.5 and TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight from 30 to 15. This didn't work because in some cases, loop closures did not happen. My goal was to reduce noise in trajectory. Also tried 3 and 0.3, as well as 0.3 and 0.3. No difference. Which is strange, because I saw a difference when I ran before without look closure...
+
+JUST PROCESSED ROSBAG DATA IN MATLAB AND RESULTS LOOK GREAT FOR FLIGHT! CARTOGRAPHER ODOM-BASE_LINK TRANSFORM IS NOT NOISY AT ALL! I THINK IT MUST HAVE BEEN AN ARTIFACT OF RVIZ.
+
+Now, I am going to run the current parameters through all of the data that I have, to create results for next week's meeting.
+
+
+
+
 
