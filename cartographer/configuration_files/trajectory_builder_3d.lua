@@ -32,7 +32,6 @@ TRAJECTORY_BUILDER_3D = {
     max_range = MAX_3D_RANGE,
   },
 
--- Note: If your sensor setup and timing is reasonable, using only the CeresScanMatcher is usually the best choice to make.
   use_online_correlative_scan_matching = false,
   real_time_correlative_scan_matcher = {
     linear_search_window = 0.15,
