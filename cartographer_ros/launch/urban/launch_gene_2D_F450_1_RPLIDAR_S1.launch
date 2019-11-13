@@ -38,18 +38,18 @@
 
 
   <param name="robot_description"
-	  textfile="$(find cartographer_ros)/urdf/urban/not_used/mike_m_full_rig_2_ouster_2_rplidar.urdf" />
+    textfile="$(find cartographer_ros)/urdf/urban/gene_F450_RPLIDAR_S1.urdf" />
 
   <node name="robot_state_publisher" pkg="robot_state_publisher"
     type="robot_state_publisher" />
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
-      -configuration_directory $(find cartographer_ros)/configuration_files
-      -configuration_basename urban/not_used/mike_m_H02_3d.lua"
+          -configuration_directory $(find cartographer_ros)/configuration_files/urban
+	  -configuration_basename gene_2D_1_RPLIDAR.lua"
       output="screen">
     <remap from="/odom" to="/transformed_odom"/> 
-    <remap from="/points2" to="/os1_1_cloud_node/points"/>
-    <remap from="/imu" to="/imu_raw"/>
+    <remap from="/laser" to="/scan"/>
+    <remap from="/imu" to="/3dm_gx5_15/imu/data"/>
   </node>
 
   <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
