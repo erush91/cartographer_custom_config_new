@@ -61,7 +61,7 @@ MAP_BUILDER.num_background_threads = 6
 -- MAP_BUILDER.num_background_threads = 7
 
 ------------------------------------------
--- CUSTOM TRAJECTORY_BUILDER_3D CHANGES --
+-- CUSTOM TRAJECTORY_BUILDER_2D CHANGES --
 ------------------------------------------
 
 TRAJECTORY_BUILDER_2D.use_imu_data = true
@@ -74,10 +74,10 @@ TRAJECTORY_BUILDER_2D.min_range = 0.5
 TRAJECTORY_BUILDER_2D.max_range = 100.
 -- TRAJECTORY_BUILDER_2D.max_range = 30.
 
-TRAJECTORY_BUILDER_2D.min_z = -100
+TRAJECTORY_BUILDER_2D.min_z = -100.
 -- TRAJECTORY_BUILDER_2D.min_z = -0.8
 
-TRAJECTORY_BUILDER_2D.max_z = 100
+TRAJECTORY_BUILDER_2D.max_z = 100.
 -- TRAJECTORY_BUILDER_2D.max_z = 2.
 
 TRAJECTORY_BUILDER_2D.missing_data_ray_length = 5.0
@@ -104,24 +104,22 @@ TRAJECTORY_BUILDER_2D.motion_filter.max_distance_meters = 0.1
 TRAJECTORY_BUILDER_2D.motion_filter.max_angle_radians = 0.04
 -- TRAJECTORY_BUILDER_2D.motion_filter.max_angle_radians = math.rad(1.)
 
-TRAJECTORY_BUILDER_2D.imu_gravity_time_constant = 10.,
-
 -------------------------------
 -- CUSTOM POSE_GRAPH CHANGES --
 -------------------------------
 
-POSE_GRAPH.optimization_problem.huber_scale = 5e2
+POSE_GRAPH.optimization_problem.huber_scale = 500.
 -- POSE_GRAPH.optimization_problem.huber_scale = 5e2
 
-POSE_GRAPH.optimize_every_n_nodes = 0-- 320
+POSE_GRAPH.optimize_every_n_nodes = 0 -- 320
 -- POSE_GRAPH.optimize_every_n_nodes = 90
 -- Set to 320 for loop closure, set to 0 for no loop closure
 
 POSE_GRAPH.constraint_builder.sampling_ratio = 0.03
 -- POSE_GRAPH.constraint_builder.sampling_ratio = 0.3
 
-POSE_GRAPH.constraint_builder. max_constraint_distance = 30.
--- POSE_GRAPH.constraint_builder. max_constraint_distance = 15.
+POSE_GRAPH.constraint_builder.max_constraint_distance = 30.
+-- POSE_GRAPH.constraint_builder.max_constraint_distance = 15.
 
 POSE_GRAPH.constraint_builder.ceres_scan_matcher.ceres_solver_options.num_threads = 6
 -- POSE_GRAPH.constraint_builder.ceres_scan_matcher.num_threads = 1
