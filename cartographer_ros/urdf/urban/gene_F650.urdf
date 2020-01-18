@@ -42,6 +42,16 @@
     </visual>
   </link>
 
+  <link name="servo">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <cylinder length="0.07" radius="0.05" />
+      </geometry>
+      <material name="black" />
+    </visual>
+  </link>
+
   <link name="base_link" />
 
   <joint name="imu_link_joint" type="fixed">
@@ -54,6 +64,12 @@
     <parent link="base_link" />
     <child link="os1_lidar" />
     <origin xyz="0 0 -0.03" rpy="3.14159265359 0 0" />
+  </joint>
+
+  <joint name="servo_link_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="servo" />
+    <origin xyz="0.15 0 0" rpy="0 0 0" />
   </joint>
 
 </robot>
