@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+
+<launch>
+    <node name="fm_vb_planner" pkg="fm_vb_planner" type="fm_vb_planner" args="-alsologtostderr" output="screen" clear_params="true">
+      <remap from="odometry" to="ground_truth/odometry" />
+      <remap from="fm_vb_planner/esdf_map_in" to="/voxblox_node/esdf_map_out" />
+      <remap from="fm_vb_planner/tsdf_map_in" to="/voxblox_node/tsdf_map_out" />
+
+      <param name="local_frame_id" value="$map" />
+      <param name="replan_dt" value="0.25" />
+      <param name="command_publishing_dt" value="0.25" />
+      <param name="replan_lookahead_sec" value="1.0" />
+      <param name="mpc_prediction_horizon" value="300" />
+
+      <param name="robot_radius" value="0.5" />
+      <param name="planning_horizon_m" value="20.0" />
+      <param name="autostart" value="true" />
+      <param name="verbose" value="true" />
+      <param name="v_max" value="2.0" />
+      <param name="a_max" value="2.0" />
+      <param name="avoid_collisions" value="true" />
+
+      <!-- What to do in case of failure. -->
+      <param name="goal_selector_strategy" value="none" />
+
+
+
+      <param name="max_block_distance_from_body" value="10" />
+      <param name="max_consecutive_ray_collisions" value="0" />
+      <param name="traversability_radius" value="0.7" />
+      <param name="publish_traversable" value="true" />
+      <param name="start_voxel_subsampling_factor" value="1" />
+      <!-- Publishing settings. -->
+      <param name="publish_tsdf_map" value="false" />
+      <param name="publish_esdf_map" value="false" />
+      <param name="publish_pointclouds" value="false" />
+      <param name="publish_slices" value="false" />
+      <param name="update_mesh_every_n_sec" value="0.25" />
+      <param name="update_esdf_every_n_sec" value="0.25" />
+      <param name="publish_map_every_n_sec" value="0.25" />
+      <param name="method" value="fast" />
+      <param name="tsdf_voxel_size" value="0.2" />
+      <param name="tsdf_voxels_per_side" value="16" />
+      <param name="esdf_max_distance_m" value="4.0" />
+      <param name="max_ray_length_m" value="10.0" />
+      <param name="voxel_carving_enabled" value="true" />
+      <param name="color_mode" value="color" />
+      <param name="use_tf_transforms" value="true" />
+      <param name="min_time_between_msgs_sec" value="0.10" />
+      <param name="clear_sphere_for_planning" value="false" />
+      <!-- <param name="occupied_sphere_radius" value="4.0" /> -->
+      <!-- <param name="clear_sphere_radius" value="$(arg clear_radius)" /> -->
+      <param name="slice_level" value="1.0" />
+      <param name="world_frame" value="map" />
+      <param name="verbose" value="false" />
+
+
+    </node>
+</launch>

@@ -23,10 +23,13 @@
   <node pkg="tf" type="static_transform_publisher" name="imu_link_tf_mast_sensor_rig_link" args="0 -0.003327 0.0135 0.707388044877 0.706824956994 0.000562863771533 0.000563312173597  /imu_link /mast_sensor_rig_link 50" />
 
   <include file="$(find cartographer_ros)/launch/niosh/carto.launch"/>
+  <node pkg="tf2odom" type="tf2odom" name="tf2odom" />
   <include file="$(find cartographer_ros)/launch/niosh/lcd.launch"/>
   <include file="$(find cartographer_ros)/launch/niosh/voxblox.launch"/>
 
-  <node pkg="rosbag" type="play" name="bag_player" args="--clock -s 200 /home/$(env HOSTNAME)/data/niosh/into_carto__outputs_imu_ouster_full_run_2019-08-18-15-20-46.bag"/>
-  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find cartographer_ros)/rviz.rviz" />
+  <node pkg="rosbag" type="play" name="bag_player" args="--clock -s 250 /home/$(env HOSTNAME)/data/niosh/imu_ouster_camera_2019-08-18-15-20-46_full.bag" output="screen"/>
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find cartographer_ros)/launch/niosh/rviz.rviz" />
+
+<!-- 1830 seconds by narrow passageways -->
 
 </launch>

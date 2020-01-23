@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+<launch>
+
+    <node name="fm_local_planner" pkg="fm_local_planner" type="fm_local_planner_node" args="-alsologtostderr" output="screen" clear_params="true">
+      <remap from="odometry" to="tf_odom" />
+      <remap from="fm_local_planner/esdf_map_in" to="voxblox_node/esdf_map_out" />
+      <remap from="fm_local_planner/tsdf_map_in" to="voxblox_node/tsdf_map_out" />
+
+      <param name="tsdf_voxel_size" value="0.2" />
+      <param name="tsdf_voxels_per_side" value="16" />
+      <param name="esdf_max_distance_m" value="5.0" />
+      <param name="update_mesh_every_n_sec" value="0.0" />
+      <param name="traversability_radius" value="$0.7" />
+      <param name="publish_traversable" value="true" />
+      <param name="slice_level" value="1.0" />
+      <param name="publish_slices" value="true" />
+
+      <param name="local_frame_id" value="map" />
+      <param name="world_frame" value="map" />
+      <param name="replan_dt" value="0.25" />
+      <param name="command_publishing_dt" value="0.25" />
+      <param name="replan_lookahead_sec" value="1.0" />
+      <param name="mpc_prediction_horizon" value="300" />
+
+      <param name="robot_radius" value="0.7" />
+      <param name="planning_horizon_m" value="20.0" />
+      <param name="autostart" value="true" />
+      <param name="verbose" value="true" />
+      <param name="v_max" value="2.0" />
+      <param name="a_max" value="2.0" />
+      <param name="avoid_collisions" value="true" />
+
+      <!-- What to do in case of failure. -->
+      <param name="goal_selector_strategy" value="none" />
+    </node>
+
+</launch>
