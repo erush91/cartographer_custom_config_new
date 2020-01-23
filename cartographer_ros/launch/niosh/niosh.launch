@@ -27,7 +27,7 @@
   <include file="$(find cartographer_ros)/launch/niosh/lcd.launch"/>
   <include file="$(find cartographer_ros)/launch/niosh/voxblox.launch"/>
 
-  <node pkg="rosbag" type="play" name="bag_player" args="--clock -s 250 /home/$(env HOSTNAME)/data/niosh/imu_ouster_camera_2019-08-18-15-20-46_full.bag" output="screen"/>
+  <node pkg="rosbag" type="play" name="bag_player" args="--clock -s 1050 /home/$(env HOSTNAME)/data/niosh/imu_ouster_camera_2019-08-18-15-20-46_full.bag" output="screen"/>
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find cartographer_ros)/launch/niosh/rviz.rviz" />
 
 <!-- 1830 seconds by narrow passageways -->
