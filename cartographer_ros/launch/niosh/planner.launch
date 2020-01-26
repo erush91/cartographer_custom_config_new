@@ -1,13 +1,14 @@
 <launch>
 
   <node pkg="fmm_planner" type="fmm_planner_node" name="fmm_planner_node" output="screen">
-      <remap from="~pose_array"     to="/pose_array"/>
-      <remap from="~odometry"       to="/tf_odom"/>
-      <remap from="~map"            to="/voxblox_node/traversable"/>
-      <param name="map/x_size"       value="10.0"/>
-      <param name="map/y_size"       value="10.0"/>
-      <param name="map/z_size"       value="10.0"/>
-      <param name="map/resolution"   value="0.10"/>
+      <remap from="~pose_array"     		to="/pose_array"/>
+      <remap from="~odometry"       		to="/tf_odom"/>
+      <remap from="~map"            		to="/voxblox_node/traversable"/>
+      <param name="map/x_size"       		value="10.0"/>
+      <param name="map/y_size"       		value="10.0"/>
+      <param name="map/z_size"       		value="10.0"/>
+      <param name="map/resolution"             	value="0.10"/>
+      <param name="goal/look_ahead_distance"   	value="1.5"/>
   </node>
 
 </launch>

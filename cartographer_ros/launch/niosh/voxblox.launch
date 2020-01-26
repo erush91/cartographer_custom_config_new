@@ -18,8 +18,8 @@
       <param name="start_voxel_subsampling_factor" value="1" />
 
       <!-- Publishing settings. -->
-      <param name="publish_tsdf_map" value="true" />
-      <param name="publish_esdf_map" value="true" />
+      <param name="publish_tsdf_map" value="false" />
+      <param name="publish_esdf_map" value="false" />
       <param name="publish_pointclouds" value="true" />
       <param name="publish_slices" value="false" />
       <param name="update_mesh_every_n_sec" value="1.00" />  <!-- was 0.25 -->
