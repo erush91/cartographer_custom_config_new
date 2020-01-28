@@ -34,5 +34,6 @@
 <!-- 1830 seconds by narrow passageways -->
 <!-- 1050 seconds by wide passageways -->
 <!-- 1080 seconds by complex geometry, good for line of sight tests -->
+<!-- 2010 seconds gets stuck -->
 
 </launch>

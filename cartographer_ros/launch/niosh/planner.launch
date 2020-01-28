@@ -9,6 +9,8 @@
       <param name="map/z_size"       		value="10.0"/>
       <param name="map/resolution"             	value="0.10"/>
       <param name="goal/look_ahead_distance"   	value="1.5"/>
+      <param name="explore/visability_distance" value="4.9"/>
+
   </node>
 
 </launch>
